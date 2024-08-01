@@ -5,9 +5,11 @@ class RecurringIssuesClient {
   client: LinearClient;
 
   constructor() {
-    this.client = new LinearClient({
-      accessToken: tokenCache.get()?.access_token,
-    });
+    const accessToken = tokenCache.get()?.access_token;
+    if (!accessToken) {
+      throw new Error("No access token stored");
+    }
+    this.client = new LinearClient({ accessToken });
   }
 
   getCurrentUser = async (): LinearFetch<User> => {
