@@ -17,8 +17,10 @@ const callbackURL = new URL(SERVER_BASE_URL);
 callbackURL.port = `${SERVER_PORT}`;
 callbackURL.pathname = "/auth/callback";
 
+/**
+ * Redirect the user to the Linear OAuth2 authorization endpoint.
+ */
 router.get("/login", (_, res) => {
-
   // generate the URL for the Linear OAuth2 authorization endpoint
   const params = {
     client_id: LINEAR_OAUTH2_CLIENT_ID,
@@ -36,6 +38,9 @@ router.get("/login", (_, res) => {
   res.redirect(url.toString());
 });
 
+/**
+ * Handle the OAuth2 callback from Linear.
+ */
 router.get("/callback", async (req, res) => {
   const { state, code } = req.query;
 
@@ -57,7 +62,7 @@ router.get("/callback", async (req, res) => {
         client_secret: LINEAR_OAUTH2_CLIENT_SECRET,
         grant_type: "authorization_code",
       },
-      { headers: { "Content-Type": "application/x-www-form-urlencoded" } }
+      { headers: { "Content-Type": "application/x-www-form-urlencoded" } },
     );
 
     // store the token in the cache
@@ -67,6 +72,13 @@ router.get("/callback", async (req, res) => {
     console.error(error);
     return res.status(500).send("Failed to exchange code for token");
   }
+});
+
+/**
+ * Check if a Linear token is stored in the cache.
+ */
+router.get("/check-token", (_, res) => {
+  res.send(tokenCache.get());
 });
 
 export default router;

@@ -5,18 +5,25 @@
   "main": "index.js",
   "scripts": {
     "dev": "npx ts-node-dev --env-file=.env src/server.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint src",
+    "format": "prettier --write ."
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@eslint/js": "^9.8.0",
     "@types/cors": "^2.8.17",
+    "@types/eslint__js": "^8.42.3",
     "@types/express": "^4.17.21",
     "@types/node": "^22.0.2",
+    "eslint": "^9.8.0",
+    "eslint-config-prettier": "^9.1.0",
     "prettier": "^3.3.3",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.0.0"
   },
   "dependencies": {
     "@linear/sdk": "^26.0.0",
